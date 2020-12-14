@@ -23,9 +23,7 @@ def insert(item, quantity, price):
         connection.commit()
         connection.close()
 
-insert("Coffee Cup",10,5)
-
-#creat a function to view the db
+#a function to view the db
 def view():
     connection = sqlite3.connect("lite.db")
     cur = connection.cursor() #defines our cursor
@@ -33,5 +31,23 @@ def view():
     rows = cur.fetchall() #fetches everything
     connection.close()
     return rows
+
+#a function to delete from the db
+def delete(item):
+    connection = sqlite3.connect("lite.db")
+    cur = connection.cursor() #defines our cursor
+    cur.execute("DELETE FROM store WHERE item=?", (item,)) #selected everything from the db
+    connection.commit()
+    connection.close()
+
+#a function to update the quantity and price of preexisting items
+def update(quantity,price,item):
+    connection = sqlite3.connect("lite.db")
+    cur = connection.cursor() #defines our cursor
+    cur.execute("UPDATE store SET quantity=?, price=? WHERE item=?",(quantity,price,item)) #selected everything from the db
+    connection.commit()
+    connection.close()
+
+update(11,6,"Water Glass")
 
 print(view()) #returned as a list
